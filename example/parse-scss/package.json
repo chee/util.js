@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "scss-parser": "^1.0.0"
+  }
+}
