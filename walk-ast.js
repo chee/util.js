@@ -1,4 +1,4 @@
-module.exports = ast => {
+module.exports = (ast, fn) => {
   (function walk(node, parent) {
     if (Array.isArray(node.value)) {
       node.value.forEach(child => {
@@ -7,5 +7,6 @@ module.exports = ast => {
     } else if (node.value && node.value.type) {
       walk(child, node)
     }
+    fn(node)
   })(ast, null)
 }
