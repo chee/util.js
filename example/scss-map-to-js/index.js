@@ -25,8 +25,6 @@ walk(ast, node => {
     } else if (node.value == ',') {
       js += node.value
     }
-  } else if (node.type == 'space') {
-    //js += node.value
   } else if (node.type == 'value') {
     node.value[1].type == 'number' && (js += node.value[1].value)
   }
