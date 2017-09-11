@@ -1,20 +1,18 @@
-iff = (cond, result) => {
-  const conditions = [{cond, result}]
-  const end = (els) => {
-    const succ = conditions.find(condition => condition.cond)
-    return succ ? succ.result : els
+export const iff = (predicate, value) => {
+  const conditions = [{predicate, value}]
+
+  const resolve = elseValue => {
+    const match = conditions.find(condition => condition.predicate)
+    return match ? match.value : elseValue
   }
-  end.elseif = (cond, result) => {
-    conditions.push({cond, result})
-    return end
+
+  resolve.elseif = (predicate, value) => {
+    conditions.push({predicate, value})
+    return resolve
   }
-  end.else = result => {
-    return end(result)
-  }
-  end.toString = () => conditions.reduce((out, condition) => {
-    out += `
-      ${condition.cond}: ${condition.result}
-    `
-  }, '')
-  return end
+
+  resolve.else = value =>
+    resolve(value)
+
+  return resolve
 }
