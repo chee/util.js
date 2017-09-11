@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 module.exports = string => [].map.call(string, character => {
   const code = character.charCodeAt(0)
   return code > 64 && code < 123
