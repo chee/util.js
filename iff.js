@@ -1,18 +1,28 @@
-export const iff = (predicate, value) => {
-  const conditions = [{predicate, value}]
+module.exports = function iff (test, value) {
+  const conditions = [{test, value}]
 
-  const resolve = elseValue => {
-    const match = conditions.find(condition => condition.predicate)
-    return match ? match.value : elseValue
+  const resolve = _else => {
+    const match = conditions.find(condition => condition.test)
+
+    return match
+      ? match.value
+      : _else
   }
 
-  resolve.elseif = (predicate, value) => {
-    conditions.push({predicate, value})
+  resolve.elseif = (test, value) => {
+    conditions.push({test, value})
     return resolve
   }
 
-  resolve.else = value =>
-    resolve(value)
+  resolve.else = value => {
+    return resolve(value)
+  }
+
+  resolve.toString = () => conditions.reduce((output, condition) =>
+    output + `
+      ${condition.test}: ${condition.value}
+    `, ''
+  )
 
   return resolve
 }
